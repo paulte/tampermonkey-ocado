@@ -71,7 +71,6 @@ performtests() {
 }
 
 findlatesttag() {
-
   LATEST=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
 
   if [[ ! "$LATEST" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
@@ -147,12 +146,12 @@ createdistversion() {
 }
 
 createtagandpush() {
-  git add ${SRCFILENAME}
+  git add "${SRCFILENAME}"
   git commit -m "Adding ${RELEASE} version of ${SRCFILENAME} for greasyfork.org integration"
   git push origin main
   git tag -a "$RELEASE" -m "Release $RELEASE"
   git push origin "$RELEASE" || echo "Tag already exists remotely"
-  gh release create "$RELEASE" ${SRCFILENAME} --title "$RELEASE" --notes "Release $RELEASE"
+  gh release create "$RELEASE" "${SRCFILENAME}" --title "$RELEASE" --notes "Release $RELEASE"
   echo "Released $RELEASE"
 }
 
@@ -165,4 +164,3 @@ findlatesttag
 evaluatenextversion
 createdistversion
 createtagandpush
-exit 0
