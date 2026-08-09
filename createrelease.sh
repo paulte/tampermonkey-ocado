@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+set -x
 export SRCFILENAME="fix-search-order.js"
 
 show_help() {
