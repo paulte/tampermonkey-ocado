@@ -158,11 +158,11 @@ updatepackagejson() {
   node -e "
   const fs = require('fs');
   const pkg = JSON.parse(fs.readFileSync('package.json'));
-  pkg.version = '$VERSION';
+  pkg.version = '$RELEASENUMBER';
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
   "
 
-  npm version "$VERSION" --no-git-tag-version
+  npm version "$RELEASENUMBER" --no-git-tag-version
 }
 checkargs "$@"
 gitmustbecleanordie
