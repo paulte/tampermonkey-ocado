@@ -5,7 +5,7 @@
 
 # Purpose
 
-Tampermonkey script to remove sponsored listings from amazon searches
+Tampermonkey script to improve user experience on Ocado by automatically sorting search results by price and removing sponsored listings.
 
 # Development and testing
 

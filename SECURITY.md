@@ -3,7 +3,7 @@
 ## Supported Versions
 
 Only the latest release will be supported:
-https://github.com/paulte/tampermonkey-amazonhidesponsoredlistings/releases/latest
+https://github.com/paulte/tampermonkey-ocado/releases/latest
 
 ## Reporting a Vulnerability
 

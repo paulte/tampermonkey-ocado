@@ -1,7 +1,7 @@
 {
-  "name": "tampermonkey-amazonhidesponsoredlistings",
+  "name": "tampermonkey-ocado",
   "version": "1.0.0",
-  "description": "Remove sponsored listings from Amazon search results using Tampermonkey.",
+  "description": "Improve search and user experieince on Ocado",
   "main": "index.js",
   "scripts": {
     "lint": "eslint src/*.js",
@@ -12,16 +12,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paulte/tampermonkey-amazonhidesponsoredlistings.git"
+    "url": "git+https://github.com/paulte/tampermonkey-ocado.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/paulte/tampermonkey-amazonhidesponsoredlistings/issues"
+    "url": "https://github.com/paulte/.git"
   },
-  "homepage": "https://github.com/paulte/tampermonkey-amazonhidesponsoredlistings#readme",
+  "homepage": "https://github.com/paulte/tampermonkey-ocado#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.62.1",
