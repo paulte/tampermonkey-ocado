@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Ocado Auto Price Sort
-// @version      1.0.4
-// @released     2026-08-09T14:58:14+0100
-// @namespace    https://github.com/paulte/ocado-auto-price-sort
+// @version      1.0.5
+// @released     2026-08-09T15:00:58+0100
+// @namespace    https://github.com/paulte/tampermonkey-ocado
 // @description  Automatically sets Ocado sort to "Price per Unit: Low to High" when searching without an explicit sort.
 // @author       paulte
 // @downloadURL  https://github.com/paulte/tampermonkey-ocado/releases/latest/download/fix-search-order.user.js
