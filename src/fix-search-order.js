@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Ocado Auto Price Sort
-// @namespace    https://github.com/paulteasdel/ocado-auto-price-sort
+// @namespace    https://github.com/paulte/ocado-auto-price-sort
 // @version      1.0.0
 // @description  Automatically sets Ocado sort to "Price per Unit: Low to High" when searching without an explicit sort.
-// @author       Paul Teasdel
+// @author       paulte
 // @match        https://www.ocado.com/*
 // @icon         https://www.google.com/s2/favicons?domain=ocado.com
 // @grant        none
