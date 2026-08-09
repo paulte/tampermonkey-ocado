@@ -1,0 +1,3 @@
+[submodule "tools/tampermonkey-tools"]
+	path = tools/tampermonkey-tools
+	url = git@github.com:paulte/tampermonkey-tools.git

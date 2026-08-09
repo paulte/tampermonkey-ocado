@@ -28,10 +28,10 @@ In the background, github actions will perform the following:
 Run one of the following depending on whether you want to bump he major, minor or patch version
 
 ```bash
-scripts/create-release.sh  ( --major | --minor | --patch )
+  tools/tampermonkey-tools/scripts/release-userscript.sh ( --major | --minor | --patch )
 ```
 
-By default, `scripts/create-release.sh --patch` should be used
+By default, `tools/tampermonkey-tools/scripts/release-userscript.sh  --patch` should be used
 
 This process will perform a few tasks:
 
