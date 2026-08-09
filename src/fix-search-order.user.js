@@ -1,20 +1,23 @@
 // ==UserScript==
 // @name         Ocado Auto Price Sort
 // @namespace    https://github.com/paulte/tampermonkey-ocado
-// @version      1.0.0
-// @description  Automatically sets Ocado sort to "Price per Unit: Low to High" when searching without an explicit sort.
+// @version      1.1.0
+// @description  Automatically sets Ocado sort to "Price per Unit: Low to High" when searching without an explicit sort, and skips optional checkout steps.
 // @author       paulte
 // @downloadURL  https://github.com/paulte/tampermonkey-ocado/releases/latest/download/fix-search-order.user.js
 // @updateURL    https://github.com/paulte/tampermonkey-ocado/releases/latest/download/fix-search-order.user.js
-// @match        https://www.ocado.com/search*
-// @match        https://ocado.com/search*
-// @icon         https://www.google.com/s2/favicons?domain=ocado.com
+// @match        https://ocado.com/*
+// @match        https://www.ocado.com/*
 // @grant        none
 // @license      MIT
 // ==/UserScript==
 
 (function () {
   'use strict';
+
+  // -------------------------------------------------------------------------
+  // Search sorting
+  // -------------------------------------------------------------------------
 
   const TARGET_SORT_LABEL = 'Price per Unit: Low to High';
 
@@ -98,6 +101,65 @@
     }, RETRY_DELAY);
   }
 
+  // -------------------------------------------------------------------------
+  // Checkout
+  // -------------------------------------------------------------------------
+
+  const CHECKOUT_MATCH = '/checkout/checkout-walk';
+  const CHECKOUT_SELECTOR = 'a[data-test="checkout-walk-crumbs-link"]';
+
+  let checkoutBusy = false;
+
+  function isCheckout() {
+    return location.pathname.includes(CHECKOUT_MATCH);
+  }
+
+  function findAndClickCheckout() {
+    const el = document.querySelector(CHECKOUT_SELECTOR);
+
+    if (!el) {
+      return false;
+    }
+
+    const text = (el.textContent || '').replace(/\s+/g, ' ').trim();
+
+    if (!text.includes('Continue checkout')) {
+      return false;
+    }
+
+    log('Clicking checkout:', text);
+
+    el.click();
+
+    return true;
+  }
+
+  function checkoutLoop() {
+    if (!isCheckout() || checkoutBusy) {
+      return;
+    }
+
+    const clicked = findAndClickCheckout();
+
+    if (clicked) {
+      checkoutBusy = true;
+
+      setTimeout(() => {
+        checkoutBusy = false;
+        checkoutLoop();
+      }, 1500);
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Navigation / DOM watching
+  // -------------------------------------------------------------------------
+
+  function handlePageChange() {
+    trySetSort();
+    checkoutLoop();
+  }
+
   function watchNavigation() {
     let lastUrl = location.href;
 
@@ -105,9 +167,7 @@
       if (location.href !== lastUrl) {
         lastUrl = location.href;
 
-        setTimeout(() => {
-          trySetSort();
-        }, 1000);
+        setTimeout(handlePageChange, 500);
       }
     }, 500);
   }
@@ -115,9 +175,10 @@
   function watchDomChanges() {
     const observer = new MutationObserver(() => {
       trySetSort();
+      checkoutLoop();
     });
 
-    observer.observe(document.body, {
+    observer.observe(document.documentElement, {
       childList: true,
       subtree: true,
     });
@@ -126,12 +187,12 @@
   function init() {
     log('Starting');
 
-    setTimeout(() => {
-      trySetSort();
-    }, 1000);
+    setTimeout(handlePageChange, 1000);
 
     watchNavigation();
     watchDomChanges();
+
+    checkoutLoop();
   }
 
   init();
