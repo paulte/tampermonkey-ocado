@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-export SRCFILENAME="fix-search-order.user.js"
 
 show_help() {
   cat <<EOF
@@ -67,7 +66,10 @@ performtests() {
   fi
 
   pre-commit run --all-files --show-diff-on-failure
-  npm test
+
+  if [[ -f package.json ]]; then
+    npm test
+  fi
 }
 
 findlatesttag() {
@@ -133,7 +135,7 @@ evaluatenextversion() {
 createdistversion() {
   DSTAMP=$(date "+%Y-%m-%dT%H:%M:%S%z")
   RELEASENUMBER="${RELEASE#v}"
-  grep -Ev '^\/\/.*@(version|released)' src/${SRCFILENAME} |
+  grep -Ev '^\/\/.*@(version|released)' <"${SRCFILENAME}" |
     awk -v release="$RELEASENUMBER" -v dstamp="$DSTAMP" '
     /\/\/ @name[[:space:]]/ {
     print
@@ -141,23 +143,57 @@ createdistversion() {
     print "// @released     " dstamp
     next
     }
-    { print }
-    ' >${SRCFILENAME}
+    { print } ' >"${SHORTSRCFILENAME}"
 }
 
 createtagandpush() {
-  git add "${SRCFILENAME}" package.json package-lock.json
+  git add "${SHORTSRCFILENAME}"
+  [[ -f package.json ]] && git add package.json
+  [[ -f package-lock.json ]] && git add package-lock.json
+
   git commit -m "Release ${RELEASE}"
   git push origin main
   git tag -a "$RELEASE" -m "Release $RELEASE"
   git push origin "$RELEASE" || echo "Tag already exists remotely"
-  gh release create "$RELEASE" "${SRCFILENAME}" --title "$RELEASE" --notes "Release $RELEASE"
+  gh release create "$RELEASE" "${SHORTSRCFILENAME}" --title "$RELEASE" --notes "Release $RELEASE"
   echo "Released $RELEASE"
 }
+
 updatepackagejson() {
   npm version "$RELEASENUMBER" --no-git-tag-version
 }
+
+finduserscript() {
+  local files
+
+  files=$(git ls-files | grep -E '^src/.*\.user\.js$' || true)
+
+  if [[ -z "$files" ]]; then
+    echo "ERROR: No userscript found under src/"
+    exit 1
+  fi
+
+  if [[ $(echo "$files" | wc -l | tr -d ' ') -ne 1 ]]; then
+    echo "ERROR: Multiple userscripts found:"
+    echo "$files"
+    echo
+    echo "Set SRCFILENAME explicitly in release configuration."
+    exit 1
+  fi
+
+  SRCFILENAME="$files"
+  SHORTSRCFILENAME=$(basename "$SRCFILENAME")
+
+  grep -q '^// ==UserScript==' "${SRCFILENAME}" || {
+    echo "ERROR: ${SRCFILENAME} does not look like a userscript"
+    exit 1
+  }
+
+  echo "Using userscript: $SRCFILENAME and creating dist version: ${SHORTSRCFILENAME}"
+}
+
 checkargs "$@"
+finduserscript
 gitmustbecleanordie
 refreshgit
 performtests
