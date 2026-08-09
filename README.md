@@ -35,7 +35,7 @@ This process will perform a few tasks:
 
 - Validate local git is up-to-date, on main and clean
 - Run `pre-commit` and `npm run test` to ensure that the code is in a good state
-- Create a new `hide-sponsored-listings.user.js` with updated version and release date
+- Create a new `fix-search.js` with updated version and release date
 - Create a new git tag
 - Create a new release for the tag
 - Push the tag to github

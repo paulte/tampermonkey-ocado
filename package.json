@@ -4,10 +4,11 @@
   "description": "Remove sponsored listings from Amazon search results using Tampermonkey.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/hide-sponsored-listings.user.js",
+    "lint": "eslint src/*.{js,json}",
     "format": "prettier --write \"**/*.{js,json}\"",
     "format:check": "prettier --check \"**/*.{js,json}\"",
-    "test": "playwright test"
+    "test": "playwright test",
+    "build": "esbuild src/main.js --bundle --outfile=ocado.user.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
     "@playwright/test": "^1.62.1",
     "eslint": "^10.8.1",
     "prettier": "^3.6.2"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.2"
   }
 }
