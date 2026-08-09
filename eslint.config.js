@@ -2,18 +2,15 @@ import js from '@eslint/js';
 
 export default [
   {
-    files: ['**/*.js'],
-    ...js.configs.recommended,
+    files: ['src/*.js'],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'script',
       globals: {
         document: 'readonly',
-        window: 'readonly',
-        MutationObserver: 'readonly',
-        console: 'readonly',
+        location: 'readonly',
         setTimeout: 'readonly',
-        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        MutationObserver: 'readonly',
+        URLSearchParams: 'readonly',
       },
     },
   },

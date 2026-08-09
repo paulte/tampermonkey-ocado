@@ -4,7 +4,7 @@
   "description": "Remove sponsored listings from Amazon search results using Tampermonkey.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/*.{js,json}",
+    "lint": "eslint src/*.js",
     "format": "prettier --write \"**/*.{js,json}\"",
     "format:check": "prettier --check \"**/*.{js,json}\"",
     "test": "playwright test",

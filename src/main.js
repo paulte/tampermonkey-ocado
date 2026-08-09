@@ -1,12 +1,11 @@
 // src/main.js
 
-import { enableAutoSearchByPrice } from "fix-search.js"
+import { enableAutoSearchByPrice } from 'fix-search.js';
 
 (function () {
-    "use strict";
+  'use strict';
 
-    console.log("[Ocado Enhancements] Starting");
+  console.log('[Ocado Enhancements] Starting');
 
-    enableAutoSearchByPrice();
-
+  enableAutoSearchByPrice();
 })();
