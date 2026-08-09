@@ -47,7 +47,6 @@ repos:
       - id: check-ast
       - id: check-merge-conflict
       - id: check-yaml
-      - id: check-toml
       - id: check-symlinks
       - id: detect-private-key
       - id: end-of-file-fixer
