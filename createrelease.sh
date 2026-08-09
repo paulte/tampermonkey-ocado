@@ -73,14 +73,14 @@ performtests() {
 findlatesttag() {
   LATEST=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
 
-  if [[ ! "$LATEST" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+  if [[ -z "$LATEST" ]]; then
     echo "No valid release tags found. Defaulting to v1.0.0"
     LATEST="v1.0.0"
+  fi
 
-    if [[ ! "$LATEST" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
-      echo "ERROR: Invalid latest release tag: $LATEST"
-      exit 1
-    fi
+  if [[ ! "$LATEST" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+    echo "ERROR: Invalid latest release tag: $LATEST"
+    exit 1
   fi
 
   MAJOR="${BASH_REMATCH[1]}"
