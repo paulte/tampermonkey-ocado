@@ -146,15 +146,22 @@ createdistversion() {
 }
 
 createtagandpush() {
-  git add "${SRCFILENAME}"
-  git commit -m "Adding ${RELEASE} version of ${SRCFILENAME} for greasyfork.org integration"
+  git add "${SRCFILENAME}" package.json
+  git commit -m "Release ${RELEASE}"
   git push origin main
   git tag -a "$RELEASE" -m "Release $RELEASE"
   git push origin "$RELEASE" || echo "Tag already exists remotely"
   gh release create "$RELEASE" "${SRCFILENAME}" --title "$RELEASE" --notes "Release $RELEASE"
   echo "Released $RELEASE"
 }
-
+packagejson() {
+  node -e "
+  const fs = require('fs');
+  const pkg = JSON.parse(fs.readFileSync('package.json'));
+  pkg.version = '$VERSION';
+  fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+  "
+}
 checkargs "$@"
 gitmustbecleanordie
 refreshgit
@@ -163,4 +170,5 @@ gitmustbecleanordie
 findlatesttag
 evaluatenextversion
 createdistversion
+updatepackagejson
 createtagandpush
