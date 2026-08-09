@@ -4,6 +4,8 @@
 // @version      1.0.0
 // @description  Automatically sets Ocado sort to "Price per Unit: Low to High" when searching without an explicit sort.
 // @author       paulte
+// @downloadURL  https://github.com/paulte/tampermonkey-ocado/releases/latest/download/fix-search-order.user.js
+// @updateURL    https://github.com/paulte/tampermonkey-ocado/releases/latest/download/fix-search-order.user.js
 // @match        https://www.ocado.com/*
 // @icon         https://www.google.com/s2/favicons?domain=ocado.com
 // @grant        none
