@@ -72,7 +72,7 @@ performtests() {
 }
 
 findlatesttag() {
-  LATEST=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+  LATEST=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)
 
   if [[ -z "$LATEST" ]]; then
     echo "No valid release tags found. Defaulting to v1.0.0"
