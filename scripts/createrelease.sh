@@ -146,7 +146,7 @@ createdistversion() {
 }
 
 createtagandpush() {
-  git add "${SRCFILENAME}" package.json
+  git add "${SRCFILENAME}" package.json package-lock.json
   git commit -m "Release ${RELEASE}"
   git push origin main
   git tag -a "$RELEASE" -m "Release $RELEASE"
@@ -161,6 +161,8 @@ packagejson() {
   pkg.version = '$VERSION';
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
   "
+
+  npm version "$VERSION" --no-git-tag-version
 }
 checkargs "$@"
 gitmustbecleanordie
