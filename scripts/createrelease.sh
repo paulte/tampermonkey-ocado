@@ -154,7 +154,7 @@ createtagandpush() {
   gh release create "$RELEASE" "${SRCFILENAME}" --title "$RELEASE" --notes "Release $RELEASE"
   echo "Released $RELEASE"
 }
-packagejson() {
+updatepackagejson() {
   node -e "
   const fs = require('fs');
   const pkg = JSON.parse(fs.readFileSync('package.json'));
