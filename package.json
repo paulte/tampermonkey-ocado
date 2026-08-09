@@ -1,10 +1,9 @@
 {
   "name": "tampermonkey-ocado",
   "version": "1.0.0",
-  "description": "Improve search and user experieince on Ocado",
-  "main": "index.js",
+  "description": "Improve search and user experience on Ocado",
   "scripts": {
-    "lint": "eslint src/*.js",
+    "lint": "eslint src",
     "format": "prettier --write \"**/*.{js,json}\"",
     "format:check": "prettier --check \"**/*.{js,json}\"",
     "test": "playwright test",
@@ -15,8 +14,8 @@
     "url": "git+https://github.com/paulte/tampermonkey-ocado.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "paulte",
+  "license": "MIT",
   "type": "module",
   "bugs": {
     "url": "https://github.com/paulte/.git"
