@@ -23,12 +23,24 @@ In the background, github actions will perform the following:
 - codeql will perform automated security analysis of the javascript code
 - dependabot will monitor project dependencies and github actions for available updates
 
-# Release process
+# Setting up shared tools subrepo
 
-Run one of the following depending on whether you want to bump he major, minor or patch version
+Checkout the common tools repo and move to the latest release tag. This is done to ensure that the tools used for development and release are consistent across all tampermonkey scripts.
 
 ```bash
-  tools/tampermonkey-tools/scripts/release-userscript.sh ( --major | --minor | --patch )
+git submodule add git@github.com:paulte/tampermonkey-tools.git tools/tampermonkey-tools
+cd tools/tampermonkey-tools
+git checkout $(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-version:refname | head -1 )
+git add -f ../../.gitmodules ../../tools/tampermonkey-tools
+git commit -m "Added tampermonkey-tools submodule at latest release tag"
+```
+
+# Release process
+
+Run one of the following depending on whether you want to bump the major, minor or patch version
+
+```bash
+tools/tampermonkey-tools/scripts/createrelease.sh  ( --major | --minor | --patch )
 ```
 
 By default, `tools/tampermonkey-tools/scripts/release-userscript.sh  --patch` should be used
