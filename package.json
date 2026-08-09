@@ -1,6 +1,6 @@
 {
   "name": "tampermonkey-ocado",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Improve search and user experience on Ocado",
   "scripts": {
     "lint": "eslint src",
