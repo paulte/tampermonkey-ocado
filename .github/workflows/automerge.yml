@@ -1,0 +1,38 @@
+name: automerge
+
+on:
+  pull_request:
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
+  status: {}
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - id: automerge
+        name: automerge
+        uses: paulte/automerge-action@795b1c01104f10bc5ba5b5ebfb266442e88249cd # v1.0.2
+        env:
+          MERGE_DELETE_BRANCH: true
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
